@@ -3,14 +3,12 @@ package org.usfirst.frc.team3807.robot;
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
-import org.usfirst.frc.team3807.robot.controllers.GripPipeline;
+import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
-<<<<<<< HEAD
+import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
-=======
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
->>>>>>> bed1e6e21936eacfe11da558c6bf0184f28de071
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -26,6 +24,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.wpilibj.vision.VisionRunner.Listener;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot{
@@ -38,6 +40,14 @@ public class Robot extends IterativeRobot{
 	SendableChooser autoChooser;
 	SensorBase sensorbase;
 	//SendableChooser controlChooser;
+	
+	private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240;
+	
+	private VisionThread visionThread;
+	private double centerX = 0.0;
+	
+	private final Object imgLock = new Object();
 	
 	@Override
 	public void robotInit(){
@@ -56,9 +66,12 @@ public class Robot extends IterativeRobot{
 		
 		new Thread(() -> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-            camera.setResolution(320, 240);
+            camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
             camera.setFPS(11);
-            GripPipeline.process(Camera);
+            
+            GripPipeline pipeline = new GripPipeline();
+            
+            visionThread = new VisionThread(new VisionRunner<VisionPipeline>(camera, (VisionPipeline) pipeline, (Listener<? super VisionPipeline>) new VisionGetter(pipeline)));
         }).start();
 		
 	}

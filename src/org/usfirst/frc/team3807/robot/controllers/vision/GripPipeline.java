@@ -1,6 +1,7 @@
-package org.usfirst.frc.team3807.robot.controllers;
+package org.usfirst.frc.team3807.robot.controllers.vision;
 
 import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
+//import org.usfirst.frc.team3807.robot.controllers.VisionProcessing;
 
 /**
 * GripPipeline class. 
@@ -24,6 +26,7 @@ import org.opencv.objdetect.*;
 * @author GRIP
 */
 public class GripPipeline {
+	
 
 	//Outputs
 	private Mat hsvThresholdOutput = new Mat();
@@ -58,6 +61,7 @@ public class GripPipeline {
 		Mat maskInput = source0;
 		Mat maskMask = cvErodeOutput;
 		mask(maskInput, maskMask, maskOutput);
+		
 
 	}
 
