@@ -3,10 +3,19 @@ package org.usfirst.frc.team3807.robot;
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
+import org.usfirst.frc.team3807.robot.controllers.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
+<<<<<<< HEAD
+import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
+=======
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+>>>>>>> bed1e6e21936eacfe11da558c6bf0184f28de071
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -27,12 +36,14 @@ public class Robot extends IterativeRobot{
 
 	Command autonomousCommand;
 	SendableChooser autoChooser;
+	SensorBase sensorbase;
 	//SendableChooser controlChooser;
 	
 	@Override
 	public void robotInit(){
 
 		CommandBase.init();
+		sensorbase = new SensorBase();
 		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("DriveForward", new DriveForward());
@@ -47,6 +58,7 @@ public class Robot extends IterativeRobot{
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0",0);
             camera.setResolution(320, 240);
             camera.setFPS(11);
+            GripPipeline.process(Camera);
         }).start();
 		
 	}
@@ -74,6 +86,10 @@ public class Robot extends IterativeRobot{
 
 	@Override
 	public void teleopPeriodic(){
+		//sensorbase.sendAccelerometerValues();
+		//sensorbase.sendPotentiometerValues();
+		//sensorbase.sendPDPValues();
+		//sensorbase.robotPrefTest();
 		Scheduler.getInstance().run();
 	}
 
