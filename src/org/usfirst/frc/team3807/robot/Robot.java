@@ -4,6 +4,7 @@ import org.usfirst.frc.team3807.robot.commands.CommandBase;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
+import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -27,12 +28,14 @@ public class Robot extends IterativeRobot{
 
 	Command autonomousCommand;
 	SendableChooser autoChooser;
+	SensorBase sensorbase;
 	//SendableChooser controlChooser;
 	
 	@Override
 	public void robotInit(){
 
 		CommandBase.init();
+		sensorbase = new SensorBase();
 		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("DriveForward", new DriveForward());
@@ -74,6 +77,10 @@ public class Robot extends IterativeRobot{
 
 	@Override
 	public void teleopPeriodic(){
+		//sensorbase.sendAccelerometerValues();
+		//sensorbase.sendPotentiometerValues();
+		//sensorbase.sendPDPValues();
+		//sensorbase.robotPrefTest();
 		Scheduler.getInstance().run();
 	}
 
