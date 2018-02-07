@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3807.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 //RobotMap contains all of the port numbers for the motor controllers, input devices, and anything else that requires a port.
 public class RobotMap {
 	//ID's for the chassis motor controllers
@@ -18,4 +20,13 @@ public class RobotMap {
 	public static final int CODRIVER_JOYSTICK_PORT = -1;
 	public static final int CODRIVER_JOYSTICK_PORT2= -1;
 	public static final int JOYSTICK_PORT = 1;
+	
+	//Encoder Ports:
+	public static int STRING_POTENT = 4;
+	public static WPI_TalonSRX STRING_POT = new WPI_TalonSRX(CHASSIS_LEFT);
+	
+	//Reference Values
+	public static int MAX_POTENT_VALUE = 200;
+	
+	
 }

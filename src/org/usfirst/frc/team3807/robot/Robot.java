@@ -3,9 +3,9 @@ package org.usfirst.frc.team3807.robot;
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
-import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
+//import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
-import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
+//import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
@@ -15,6 +15,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -67,13 +69,28 @@ public class Robot extends IterativeRobot{
 		new Thread(() -> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0",0);
             camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            camera.setFPS(11);
+            camera.setFPS(60);
+        
             
-            GripPipeline pipeline = new GripPipeline();
+          
+           // GripPipeline pipeline = new GripPipeline();
             
-            visionThread = new VisionThread(new VisionRunner<VisionPipeline>(camera, (VisionPipeline) pipeline, (Listener<? super VisionPipeline>) new VisionGetter(pipeline)));
+         //   visionThread = new VisionThread(new VisionRunner<VisionPipeline>(camera, (VisionPipeline) pipeline, (Listener<? super VisionPipeline>) new VisionGetter(pipeline)));
         }).start();
 		
+//		//Test code for potentiometer
+//		AnalogInput potAnalogIn;
+//		AnalogPotentiometer stringPotentiometer;
+//		double potValue;
+//		
+//		
+//		potAnalogIn = new AnalogInput(1);
+//		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
+//		
+//		potValue = stringPotentiometer.pidGet();
+////		SmartDashboard.putString("StringPotentiometerPosition", String.format("%.4f", potValue*1000));
+//		SmartDashboard.putString("StringPotentiometerPosition", ""+ potValue*1000);
+//				
 	}
 
 	@Override
@@ -100,9 +117,11 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void teleopPeriodic(){
 		//sensorbase.sendAccelerometerValues();
-		//sensorbase.sendPotentiometerValues();
+		sensorbase.sendPotentiometerValues();
 		//sensorbase.sendPDPValues();
 		//sensorbase.robotPrefTest();
+//		WPI_TalonSRX potent= RobotMap.STRING_POT;
+//		SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
 		Scheduler.getInstance().run();
 	}
 

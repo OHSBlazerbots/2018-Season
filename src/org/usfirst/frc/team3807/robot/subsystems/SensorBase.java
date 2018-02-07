@@ -33,7 +33,7 @@ public class SensorBase extends Subsystem {
 		prefs = Preferences.getInstance();
 		
 		//int port = (int) SmartDashboard.getNumber("PROT", 6);
-		int port = 6;
+		int port = 0;
 		internalAccelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 		potAnalogIn = new AnalogInput(port);
 		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
@@ -55,9 +55,12 @@ public class SensorBase extends Subsystem {
 		SmartDashboard.putString("InternalAccelerometerZ", String.format("%.4f", zAcceleration*1000));
 	}
 	
+	
+	//commented out for testing in robot class
 	public void sendPotentiometerValues() {
-		potValue = stringPotentiometer.pidGet();
+		potValue = stringPotentiometer.get();
 		SmartDashboard.putString("StringPotentiometerPosition", String.format("%.4f", potValue*1000));
+		System.out.println("STRING POTENTIOMETER INPUT: " + potValue);
 	}
 	
 	/*
