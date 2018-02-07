@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
+
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -8,6 +9,7 @@ import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
 import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -63,16 +65,29 @@ public class Robot extends IterativeRobot{
 		
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
+
+			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
+            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
+            camera0.setFPS(11);
+            
+            UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1",1);
+            camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
+            camera1.setFPS(11);
 		
-		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-            camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            camera.setFPS(11);
+		
             
-            GripPipeline pipeline = new GripPipeline();
             
-            visionThread = new VisionThread(new VisionRunner<VisionPipeline>(camera, (VisionPipeline) pipeline, (Listener<? super VisionPipeline>) new VisionGetter(pipeline)));
-        }).start();
+            VisionThread visionThread = new VisionThread(camera1, new GripPipeline() ,
+            		pipeline -> {
+                if (!pipeline.filterContoursOutput().isEmpty()) {
+                    Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                    synchronized (imgLock) {
+                        centerX = r.x + (r.width / 2);
+                        SmartDashboard.updateValues(camera1);
+                    }
+                }
+            });
+            visionThread.start();
 		
 	}
 
