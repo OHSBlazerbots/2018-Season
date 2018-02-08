@@ -66,24 +66,25 @@ public class Robot extends IterativeRobot{
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
 
-			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            camera0.setFPS(11);
+//			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
+//            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//            camera0.setFPS(11);
             
             UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1",1);
             camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            camera1.setFPS(11);
+            //camera1.setFPS(11);
 		
 		
             
-            
+            SmartDashboard.putBoolean("test", false);                                      
             VisionThread visionThread = new VisionThread(camera1, new GripPipeline() ,
             		pipeline -> {
+            			SmartDashboard.putBoolean("test", true);
                 if (!pipeline.filterContoursOutput().isEmpty()) {
                     Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                     synchronized (imgLock) {
                         centerX = r.x + (r.width / 2);
-                        SmartDashboard.updateValues(camera1);
+                        SmartDashboard.putNumber("CENTERX", centerX);
                     }
                 }
             });
