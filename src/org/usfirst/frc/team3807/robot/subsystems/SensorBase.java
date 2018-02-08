@@ -60,7 +60,17 @@ public class SensorBase extends Subsystem {
 	public void sendPotentiometerValues() {
 		potValue = stringPotentiometer.get();
 		SmartDashboard.putString("StringPotentiometerPosition", String.format("%.4f", potValue*1000));
+
 		System.out.println("STRING POTENTIOMETER INPUT: " + potValue);
+	}
+	
+	public boolean withinPotentiometerLimit() {
+
+		if(0.5 < potValue && potValue < 0.9) {// Check if the potentiometer value is in the good range
+			return true;
+		}
+		
+		return false; // Return false to keep the code running.
 	}
 	
 	/*

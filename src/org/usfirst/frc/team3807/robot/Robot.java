@@ -7,6 +7,7 @@ import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
 //import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
+import org.usfirst.frc.team3807.robot.subsystems.scissorlift.StopScissorlift;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -118,6 +119,11 @@ public class Robot extends IterativeRobot{
 	public void teleopPeriodic(){
 		//sensorbase.sendAccelerometerValues();
 		sensorbase.sendPotentiometerValues();
+		
+		if(!sensorbase.withinPotentiometerLimit()) {
+			new StopScissorlift().initialize();
+		}
+		
 		//sensorbase.sendPDPValues();
 		//sensorbase.robotPrefTest();
 //		WPI_TalonSRX potent= RobotMap.STRING_POT;

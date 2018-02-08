@@ -10,10 +10,10 @@ public class RobotMap {
 	
 	//ID's for the WheelIntake motor controllers
 	public static final int INTAKE_WHEEL_ONE = 1;
-	public static final int INTAKE_WHEEL_TWO = 9;
+	public static final int INTAKE_WHEEL_TWO = 5;
 	
 	//ID's for the scissor lift
-	public static final int SCISSOR_LIFT_MOTOR = -1;
+	public static final int SCISSOR_LIFT_MOTOR = 2;
 
 	//IDs for the joysticks
 	public static final int XBOX_CONTROLLER = 0; 
