@@ -2,6 +2,7 @@ package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
 
+
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -66,18 +67,18 @@ public class Robot extends IterativeRobot{
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
 
-//			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-//            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//            camera0.setFPS(11);
+			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
+            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
+            //camera0.setFPS(11);
             
-            UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1",1);
-            camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            //camera1.setFPS(11);
+//            UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1",1);
+//            camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//            //camera1.setFPS(11);
 		
 		
             
             SmartDashboard.putBoolean("test", false);                                      
-            VisionThread visionThread = new VisionThread(camera1, new GripPipeline() ,
+            VisionThread visionThread = new VisionThread(camera0, new GripPipeline() ,
             		pipeline -> {
             			SmartDashboard.putBoolean("test", true);
                 if (!pipeline.filterContoursOutput().isEmpty()) {
