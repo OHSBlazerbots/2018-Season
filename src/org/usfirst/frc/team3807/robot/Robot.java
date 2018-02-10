@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot{
 	private static final int IMG_HEIGHT = 240;
 	
 	private VisionThread visionThread;
-	private double centerX = 0.0;
+	private double centerX = 0;
 	
 	private final Object imgLock = new Object();
 	
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot{
                 if (!pipeline.filterContoursOutput().isEmpty()) {
                     Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                     synchronized (imgLock) {
-                        centerX = r.x + (r.width / 2);
+                        centerX = r.x + (r.width / 4);
                         SmartDashboard.putNumber("CENTERX", centerX);
                     }
                 }
