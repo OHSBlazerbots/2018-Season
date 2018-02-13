@@ -30,8 +30,8 @@ public class SensorBase extends Subsystem {
 	double totalPDPCurrent;
 
 	// Hall Effect Sensors
-	// DigitalInput maxHall;
-	// DigitalInput minHall;
+	 DigitalInput maxHall;
+	 DigitalInput minHall;
 
 	// Robot Preferences
 	Preferences prefs;
@@ -46,8 +46,8 @@ public class SensorBase extends Subsystem {
 		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
 		// pdp = new PowerDistributionPanel();
 
-		// maxHall = new DigitalInput(RobotMap.maxHallPort);
-		// minHall = new DigitalInput(RobotMap.minHallPort);
+		 maxHall = new DigitalInput(RobotMap.maxHallPort);
+		 minHall = new DigitalInput(RobotMap.minHallPort);
 	}
 
 	@Override
@@ -81,7 +81,17 @@ public class SensorBase extends Subsystem {
 
 		return false; // Return false to keep the code running.
 	}
-
+	
+	//Normally returns true
+	public boolean getMaxHall() {
+		return maxHall.get();
+	}
+	
+	//Normally returns true
+	public boolean getMinHall() {
+		return minHall.get(); 
+	}
+	
 	/*
 	 * public void sendPDPValues() { totalPDPCurrent = pdp.getTotalCurrent();
 	 * SmartDashboard.putString("TotalPDPCurrent", String.format("%.4f Amps",
