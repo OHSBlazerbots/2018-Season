@@ -17,11 +17,11 @@ public class OI {
 	private final JoystickButton runWheelIntakeButton;
 	private final JoystickButton runWheelIntakeReverseButton;
 	private final JoystickButton stopWheelIntakeButton;
-	/*
+
 	private final JoystickButton runScissorLiftButton;
 	private final JoystickButton runScissorLiftReverseButton;
 	private final JoystickButton stopScissorLiftButton;
-*/
+
 	public OI(){
 		runWheelIntakeButton = new JoystickButton(joystick, 1);
 		runWheelIntakeButton.whenPressed(new RunIntake(0.5));
@@ -32,14 +32,15 @@ public class OI {
 		stopWheelIntakeButton = new JoystickButton(joystick, 3);
 		stopWheelIntakeButton.whenPressed(new StopIntake());
 		
-		//runScissorLiftButton = new JoystickButton(joystick, -1);
-		//runScissorLiftButton.whenPressed(new ExtendScissorlift(0.5));
 		
-		//runScissorLiftReverseButton = new JoystickButton(joystick, -1);
-		//runScissorLiftReverseButton.whenPressed(new ReduceScissorlift(0.5));
+		runScissorLiftButton = new JoystickButton(joystick, 9);
+		runScissorLiftButton.whenPressed(new ExtendScissorlift(0.5));
 		
-		//stopScissorLiftButton = new JoystickButton(joystick, -1);
-		//stopScissorLiftButton.whenPressed(new StopScissorlift());
+		runScissorLiftReverseButton = new JoystickButton(joystick, 10);
+		runScissorLiftReverseButton.whenPressed(new ReduceScissorlift(0.5));
+		
+		stopScissorLiftButton = new JoystickButton(joystick, 11);
+		stopScissorLiftButton.whenPressed(new StopScissorlift());
 		
 	}
 

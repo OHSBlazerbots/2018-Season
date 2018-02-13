@@ -5,10 +5,11 @@ import org.usfirst.frc.team3807.robot.commands.CommandBase;
 
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
-import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
+//import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
-import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
+//import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
+import org.usfirst.frc.team3807.robot.subsystems.scissorlift.StopScissorlift;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -18,6 +19,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -66,31 +69,37 @@ public class Robot extends IterativeRobot{
 		
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
-
-			UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-            camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            //camera0.setFPS(11);
-            
-//            UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture("cam1",1);
-//            camera1.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//            //camera1.setFPS(11);
 		
-		
-            
-            SmartDashboard.putBoolean("test", false);                                      
-            VisionThread visionThread = new VisionThread(camera0, new GripPipeline() ,
-            		pipeline -> {
-            			SmartDashboard.putBoolean("test", true);
-                if (!pipeline.filterContoursOutput().isEmpty()) {
-                    Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-                    synchronized (imgLock) {
-                        centerX = r.x + (r.width / 4);
-                        SmartDashboard.putNumber("CENTERX", centerX);
-                    }
-                }
-            });
+		UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
+        camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		    
+        SmartDashboard.putBoolean("test", false);                                      
+        VisionThread visionThread = new VisionThread(camera0, new GripPipeline() ,
+           		pipeline -> {
+          			SmartDashboard.putBoolean("test", true);
+               if (!pipeline.filterContoursOutput().isEmpty()) {
+                   Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                   synchronized (imgLock) {
+                       centerX = r.x + (r.width / 4);
+                       SmartDashboard.putNumber("CENTERX", centerX);
+                   }
+               }
+           });
             visionThread.start();
 		
+//		//Test code for potentiometer
+//		AnalogInput potAnalogIn;
+//		AnalogPotentiometer stringPotentiometer;
+//		double potValue;
+//		
+//		
+//		potAnalogIn = new AnalogInput(1);
+//		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
+//		
+//		potValue = stringPotentiometer.pidGet();
+////		SmartDashboard.putString("StringPotentiometerPosition", String.format("%.4f", potValue*1000));
+//		SmartDashboard.putString("StringPotentiometerPosition", ""+ potValue*1000);
+//				
 	}
 
 	@Override
@@ -117,9 +126,16 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void teleopPeriodic(){
 		//sensorbase.sendAccelerometerValues();
-		//sensorbase.sendPotentiometerValues();
+		sensorbase.sendPotentiometerValues();
+		
+		if(!sensorbase.withinPotentiometerLimit()) {
+			new StopScissorlift().initialize();
+		}
+		
 		//sensorbase.sendPDPValues();
 		//sensorbase.robotPrefTest();
+//		WPI_TalonSRX potent= RobotMap.STRING_POT;
+//		SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
 		Scheduler.getInstance().run();
 	}
 

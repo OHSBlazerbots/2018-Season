@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ScissorLift extends Subsystem {
 	WPI_TalonSRX ScissorLiftMotor1;
 
+//	ScissorLiftMotor1.
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
@@ -20,6 +21,7 @@ public class ScissorLift extends Subsystem {
 
 	public void extendScissorLift(double speedWheelIntake) {
 		ScissorLiftMotor1.set(speedWheelIntake);
+	
 	}
 
 	public void reduceScissorLift(double speedWheelIntake) {
