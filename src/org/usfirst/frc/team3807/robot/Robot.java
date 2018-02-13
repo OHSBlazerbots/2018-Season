@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
+
+
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 //import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -9,6 +11,7 @@ import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
 import org.usfirst.frc.team3807.robot.subsystems.scissorlift.StopScissorlift;
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -48,7 +51,7 @@ public class Robot extends IterativeRobot{
 	private static final int IMG_HEIGHT = 240;
 	
 	private VisionThread visionThread;
-	private double centerX = 0.0;
+	private double centerX = 0;
 	
 	private final Object imgLock = new Object();
 	
@@ -67,17 +70,22 @@ public class Robot extends IterativeRobot{
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
 		
-		new Thread(() -> {
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("cam0",0);
-            camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-            camera.setFPS(60);
-        
-            
-          
-           // GripPipeline pipeline = new GripPipeline();
-            
-         //   visionThread = new VisionThread(new VisionRunner<VisionPipeline>(camera, (VisionPipeline) pipeline, (Listener<? super VisionPipeline>) new VisionGetter(pipeline)));
-        }).start();
+		UsbCamera camera0 = CameraServer.getInstance().startAutomaticCapture("cam0",0);
+        camera0.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		    
+        SmartDashboard.putBoolean("test", false);                                      
+        VisionThread visionThread = new VisionThread(camera0, new GripPipeline() ,
+           		pipeline -> {
+          			SmartDashboard.putBoolean("test", true);
+               if (!pipeline.filterContoursOutput().isEmpty()) {
+                   Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                   synchronized (imgLock) {
+                       centerX = r.x + (r.width / 4);
+                       SmartDashboard.putNumber("CENTERX", centerX);
+                   }
+               }
+           });
+            visionThread.start();
 		
 //		//Test code for potentiometer
 //		AnalogInput potAnalogIn;
