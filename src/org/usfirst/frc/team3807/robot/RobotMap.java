@@ -26,8 +26,8 @@ public class RobotMap {
 	public static WPI_TalonSRX STRING_POT = new WPI_TalonSRX(CHASSIS_LEFT);
 	
 	//Hall Effect Sensor Ports
-	public static int maxHallPort = -1;
-	public static int minHallPort = -1;
+	public static int maxHallPort = 0;
+	public static int minHallPort = 1;
 	
 	
 	

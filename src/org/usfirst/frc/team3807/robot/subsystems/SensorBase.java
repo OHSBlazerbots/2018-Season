@@ -30,8 +30,8 @@ public class SensorBase extends Subsystem {
 	double totalPDPCurrent;
 
 	// Hall Effect Sensors
-	 DigitalInput maxHall;
-	 DigitalInput minHall;
+	 DigitalInput maxHallInput;
+	 DigitalInput minHallInput;
 
 	// Robot Preferences
 	Preferences prefs;
@@ -46,8 +46,8 @@ public class SensorBase extends Subsystem {
 		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
 		// pdp = new PowerDistributionPanel();
 
-		 maxHall = new DigitalInput(RobotMap.maxHallPort);
-		 minHall = new DigitalInput(RobotMap.minHallPort);
+		 maxHallInput = new DigitalInput(RobotMap.maxHallPort);
+		 minHallInput = new DigitalInput(RobotMap.minHallPort);
 	}
 
 	@Override
@@ -82,14 +82,23 @@ public class SensorBase extends Subsystem {
 		return false; // Return false to keep the code running.
 	}
 	
-	//Normally returns true
-	public boolean getMaxHall() {
-		return maxHall.get();
+	public boolean fullyExtended() {
+		return !maxHallInput.get();
+	}
+	public boolean fullyRetracted() {
+		return !minHallInput.get();
 	}
 	
-	//Normally returns true
-	public boolean getMinHall() {
-		return minHall.get(); 
+	public boolean extending() {
+		return false;
+	}
+	public boolean retracting() {
+		return false;
+	}
+	
+	public void sendHallEffectValues() {
+		SmartDashboard.putBoolean("HallLeft", !maxHallInput.get());
+		SmartDashboard.putBoolean("HallRight", !minHallInput.get());
 	}
 	
 	/*
@@ -104,6 +113,10 @@ public class SensorBase extends Subsystem {
 		SmartDashboard.putBoolean("BOAJFD", boals);
 		int port = prefs.getInt("PROT", 1);
 		SmartDashboard.putNumber("PORT", port);
+	}
+	
+	public static void getRobotPreferences() {
+		
 	}
 
 }

@@ -4,6 +4,10 @@ package org.usfirst.frc.team3807.robot;
 public class RobotValues {
 
 	// Controller Booleans
-	public static boolean useController = false;// set to false to use the xbox controller
+	public static boolean useController = false;// set to true to use the xbox controller
+	public static boolean rightHandController = false;
+	
+	public static boolean extending = false;
+	public static boolean retracting = false;
 
 }

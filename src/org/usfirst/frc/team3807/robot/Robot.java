@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot{
 	Command autonomousCommand;
 	
 	SendableChooser autoChooser;
-	SendableChooser controllerChooser;
+	SendableChooser driverControllerChooser;
 	SensorBase sensorbase;
 	//SendableChooser controlChooser;
 	
@@ -70,8 +70,11 @@ public class Robot extends IterativeRobot{
 		autoChooser.addDefault("DoNothingAuto",new DoNothingAuto());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 		
-		controllerChooser.addDefault("Xbox Controller", !RobotValues.useController);
-		controllerChooser.addDefault("Use Joystick Controller", RobotValues.useController);
+		driverControllerChooser = new SendableChooser();
+		driverControllerChooser.addDefault("Controller - Left Hand", (RobotValues.useController && !RobotValues.rightHandController));
+		driverControllerChooser.addDefault("Controller - Right Hand", (RobotValues.useController && RobotValues.rightHandController));
+		driverControllerChooser.addDefault("Joystick", !RobotValues.useController);
+		SmartDashboard.putData("Driver Controller Chooser", driverControllerChooser);
 		
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
@@ -125,8 +128,7 @@ public class Robot extends IterativeRobot{
 
 	@Override
 	public void teleopInit(){
-		
-		SmartDashboard.putBoolean("Xbox is in use", value)
+		//SensorBase.getRobotPreferences();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -134,16 +136,20 @@ public class Robot extends IterativeRobot{
 	@Override
 	public void teleopPeriodic(){
 		//sensorbase.sendAccelerometerValues();
-		sensorbase.sendPotentiometerValues();
-		
-		if(!sensorbase.withinPotentiometerLimit()) {
-			new StopScissorlift().initialize();
-		}
+		//sensorbase.sendPotentiometerValues();
 		
 		//sensorbase.sendPDPValues();
 		//sensorbase.robotPrefTest();
 //		WPI_TalonSRX potent= RobotMap.STRING_POT;
 //		SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
+		sensorbase.sendHallEffectValues();
+		if(sensorbase.fullyExtended() && RobotValues.extending) {
+			new StopScissorlift().initialize();
+		}
+		
+		if(sensorbase.fullyRetracted() && RobotValues.retracting) {
+			new StopScissorlift().initialize();
+		}
 		
 		Scheduler.getInstance().run();
 	}
