@@ -7,6 +7,7 @@ import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 //import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
+import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 //import org.usfirst.frc.team3807.robot.controllers.vision.VisionGetter;
 import org.usfirst.frc.team3807.robot.subsystems.SensorBase;
 import org.usfirst.frc.team3807.robot.subsystems.scissorlift.StopScissorlift;
@@ -43,7 +44,9 @@ public class Robot extends IterativeRobot{
 	private XboxController xbox = new XboxController(RobotMap.XBOX_CONTROLLER);
 
 	Command autonomousCommand;
+	
 	SendableChooser autoChooser;
+	SendableChooser controllerChooser;
 	SensorBase sensorbase;
 	//SendableChooser controlChooser;
 	
@@ -61,11 +64,14 @@ public class Robot extends IterativeRobot{
 		CommandBase.init();
 		sensorbase = new SensorBase();
 		
+		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("DriveForward", new DriveForward());
 		autoChooser.addDefault("DoNothingAuto",new DoNothingAuto());
-		
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+		
+		controllerChooser.addDefault("Xbox Controller", !RobotValues.useController);
+		controllerChooser.addDefault("Use Joystick Controller", RobotValues.useController);
 		
 		//controlChooser = new SendableChooser();
 		//controlChooser.addDefault("", null);
@@ -119,6 +125,8 @@ public class Robot extends IterativeRobot{
 
 	@Override
 	public void teleopInit(){
+		
+		SmartDashboard.putBoolean("Xbox is in use", value)
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -136,6 +144,7 @@ public class Robot extends IterativeRobot{
 		//sensorbase.robotPrefTest();
 //		WPI_TalonSRX potent= RobotMap.STRING_POT;
 //		SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
+		
 		Scheduler.getInstance().run();
 	}
 

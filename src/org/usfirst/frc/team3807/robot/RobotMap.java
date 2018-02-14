@@ -29,6 +29,8 @@ public class RobotMap {
 	public static int maxHallPort = -1;
 	public static int minHallPort = -1;
 	
+	
+	
 	//Reference Values
 	public static int MAX_POTENT_VALUE = 200;
 	
