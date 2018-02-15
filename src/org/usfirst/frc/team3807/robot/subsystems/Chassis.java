@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3807.robot.subsystems;
 
 import org.usfirst.frc.team3807.robot.RobotMap;
+
 import org.usfirst.frc.team3807.robot.RobotValues;
 
 //import org.usfirst.frc.team3807.robot.commands.DriveWithJoystick;
@@ -94,6 +95,7 @@ public class Chassis extends Subsystem {
 		 * 
 		 * turn = controller.getX(GenericHID.Hand.kRight) * xboxTurnSpeed; move =
 		 * controller.getY(GenericHID.Hand.kRight) * xboxMoveSpeed; }else{ turn =
+		 * 
 		 * controller.getX(GenericHID.Hand.kRight) * xboxTurnSpeed; move =
 		 * controller.getY(GenericHID.Hand.kLeft) * xboxMoveSpeed; }
 		 */
@@ -104,14 +106,22 @@ public class Chassis extends Subsystem {
 		drive(move, turn);
 	}
 
+
+	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		if (useXbox) {
-			setDefaultCommand(new DriveWithXbox()); // If we are using the xbox controller, call DriveWithXbox()
+		
+		System.out.println("in InitDefaultCommand()");
+		System.out.println("==========================================================================================");
+		if (RobotValues.controlType.equals("3")) {
+			setDefaultCommand(new DriveWithJoystick()); // If we are using the xbox controller, call DriveWithXbox()
+			
 		} else {
-			setDefaultCommand(new DriveWithJoystick()); // If we are using the joystick, call DriveWithJoystick()
+			setDefaultCommand(new DriveWithXbox()); // If we are using the joystick, call DriveWithJoystick()
 		}
+		System.out.println("in InitDefaultCommand()");
 	}
+	
 
 	public void Halt() {
 		// Stop the chassis from moving
