@@ -99,9 +99,14 @@ public class Chassis extends Subsystem {
 		 * controller.getX(GenericHID.Hand.kRight) * xboxTurnSpeed; move =
 		 * controller.getY(GenericHID.Hand.kLeft) * xboxMoveSpeed; }
 		 */
-		// Forward, Reverse, Left, Right, right joystick.
-		turn = controller.getX(GenericHID.Hand.kRight) * xboxTurnSpeed;
-		move = controller.getY(GenericHID.Hand.kRight) * xboxMoveSpeed;
+
+		if(RobotValues.rightHandController) {
+			turn = controller.getX(GenericHID.Hand.kRight) * xboxTurnSpeed;
+			move = controller.getY(GenericHID.Hand.kRight) * xboxMoveSpeed;
+		}else {
+			turn = controller.getX(GenericHID.Hand.kLeft) * xboxTurnSpeed;
+			move = controller.getY(GenericHID.Hand.kLeft) * xboxMoveSpeed;
+		}
 
 		drive(move, turn);
 	}
@@ -113,12 +118,13 @@ public class Chassis extends Subsystem {
 		
 		System.out.println("in InitDefaultCommand()");
 		System.out.println("==========================================================================================");
-		if (RobotValues.controlType.equals("3")) {
-			setDefaultCommand(new DriveWithJoystick()); // If we are using the xbox controller, call DriveWithXbox()
-			
+		
+		if (RobotValues.useController) {
+			setDefaultCommand(new DriveWithXbox()); // If we are using the xbox controller, call DriveWithXbox()
 		} else {
-			setDefaultCommand(new DriveWithXbox()); // If we are using the joystick, call DriveWithJoystick()
+			setDefaultCommand(new DriveWithJoystick()); // If we are using the joystick, call DriveWithJoystick()
 		}
+		
 		System.out.println("in InitDefaultCommand()");
 	}
 	

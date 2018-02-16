@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
-
+import org.usfirst.frc.team3807.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team3807.robot.commands.DriveWithXbox;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 //import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -136,7 +137,17 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		System.out.println("in teleopInitCommand()");
-		RobotValues.controlType = driverControllerChooser.getSelected();
+		RobotValues.controlType = Integer.valueOf(driverControllerChooser.getSelected());
+		
+		switch(RobotValues.controlType) {
+		case 1:
+			System.out.println("CASE 1");
+			RobotValues.useController = false;
+		case 2:
+			System.out.println("CASE 2");
+			RobotValues.rightHandController = true;
+	}
+		
 		System.out.println("RobotValues.controlType="+RobotValues.controlType);
 		CommandBase.chassis.initDefaultCommand();
 		// SensorBase.getRobotPreferences();

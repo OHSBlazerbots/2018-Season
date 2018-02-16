@@ -6,7 +6,8 @@ public class RobotValues {
 	// Controller Booleans
 	public static boolean useController = false;// set to true to use the xbox controller
 	public static boolean rightHandController = false;
-	public static String controlType = "3";
+	
+	public static int controlType = 3;
 	public static boolean extending = false;
 	public static boolean retracting = false;
 
