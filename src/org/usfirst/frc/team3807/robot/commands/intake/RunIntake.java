@@ -12,7 +12,7 @@ public class RunIntake extends CommandBase {
 
 	}
 
-	protected void initialize() {
+	protected void initialize() {//runs wheel intake at set speed 
 		wheelIntake.RunWheelIntake(speed);
 	}
 

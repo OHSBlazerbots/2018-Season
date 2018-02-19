@@ -1,5 +1,5 @@
 package org.usfirst.frc.team3807.robot.commands.autonomous;
 
-public class DoNothingAuto extends Autonomous {
+public class DoNothingAuto extends Autonomous {//does nothing 
 
 }
