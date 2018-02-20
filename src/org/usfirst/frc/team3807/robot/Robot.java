@@ -2,7 +2,7 @@ package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.CommandBase;
 import org.usfirst.frc.team3807.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team3807.robot.commands.DriveWithXbox;
+import org.usfirst.frc.team3807.robot.commands.DriveWithLeftHandXbox;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
 //import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionRunner.Listener;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 
 public class Robot extends IterativeRobot {
 
@@ -62,11 +63,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("in robotInit()");
+		
+		RobotValues.controlType = getControlScheme();
+		
 		CommandBase.init();
 		sensorbase = new SensorBase();
 
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("DriveForward", new DriveForward());
+		autoChooser.addObject("DriveForward", new DriveForward(sensorbase.getDriveForwardTime()));
 		autoChooser.addDefault("DoNothingAuto", new DoNothingAuto());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
@@ -99,7 +103,7 @@ public class Robot extends IterativeRobot {
 				}
 			}
 		});
-		visionThread.start();
+		//visionThread.start();
 
 		// //Test code for potentiometer
 		// AnalogInput potAnalogIn;
@@ -121,9 +125,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-
 		autonomousCommand = (Command) autoChooser.getSelected();
-
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
@@ -133,31 +135,22 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
+	
+	public int getControlScheme() {
+		Preferences prefs = Preferences.getInstance();
+		return(prefs.getInt("CONTROL", 3));
+	}
 
 	@Override
 	public void teleopInit() {
 		System.out.println("in teleopInitCommand()");
-		RobotValues.controlType = Integer.valueOf(driverControllerChooser.getSelected());
-		
-		switch(RobotValues.controlType) {
-		case 1:
-			System.out.println("CASE 1");
-			RobotValues.useController = false;
-		case 2:
-			System.out.println("CASE 2");
-			RobotValues.rightHandController = true;
-	}
+		//RobotValues.controlType = getControlScheme();
 		
 		System.out.println("RobotValues.controlType="+RobotValues.controlType);
 		CommandBase.chassis.initDefaultCommand();
 		// SensorBase.getRobotPreferences();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		// = (boolean) driverControllerChooser.getSelected();
-		// System.out.println("selected value:" +
-		// driverControllerChooser.getSelected().toString() );
-		// SmartDashboard.putString("choosevalue ",
-		// driverControllerChooser.getSelected().toString());
 		
 		System.out.println("out teleopInitCommand()");
 

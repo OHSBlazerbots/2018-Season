@@ -8,7 +8,10 @@ public class RobotValues {
 	public static boolean rightHandController = false;
 	
 	public static int controlType = 3;
+	
 	public static boolean extending = false;
 	public static boolean retracting = false;
+	
+	public static double driveForwardTime = 6;
 
 }

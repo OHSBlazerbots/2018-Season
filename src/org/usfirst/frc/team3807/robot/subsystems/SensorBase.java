@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3807.robot.subsystems;
 
 import org.usfirst.frc.team3807.robot.RobotMap;
+import org.usfirst.frc.team3807.robot.RobotValues;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -100,13 +101,6 @@ public class SensorBase extends Subsystem {
 		SmartDashboard.putBoolean("HallLeft", !maxHallInput.get());
 		SmartDashboard.putBoolean("HallRight", !minHallInput.get());
 	}
-	
-	/*
-	 * public void sendPDPValues() { totalPDPCurrent = pdp.getTotalCurrent();
-	 * SmartDashboard.putString("TotalPDPCurrent", String.format("%.4f Amps",
-	 * totalPDPCurrent)); SmartDashboard.putString("PDPTOTAMP",
-	 * pdp.getTotalCurrent() + ""); }
-	 */
 
 	public void robotPrefTest() throws NullPointerException {
 		Boolean boals = prefs.getBoolean("BOOLEANA", true);
@@ -115,8 +109,9 @@ public class SensorBase extends Subsystem {
 		SmartDashboard.putNumber("PORT", port);
 	}
 	
-	public static void getRobotPreferences() {
-		
+	public double getDriveForwardTime() {
+		System.out.println("DriveForwardTime Ran");
+		return prefs.getDouble("DriveForwardTime", 3);
 	}
 
 }

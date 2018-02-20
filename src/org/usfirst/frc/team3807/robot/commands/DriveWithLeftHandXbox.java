@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveWithXbox extends CommandBase {
+public class DriveWithLeftHandXbox extends CommandBase {
 
-    public DriveWithXbox() {
+    public DriveWithLeftHandXbox() {
         requires(chassis); //Used to declare subsystem dependencies
     }
 
@@ -20,7 +20,7 @@ public class DriveWithXbox extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	chassis.driveWithXbox(OI.getXboxController());
+    	chassis.driveWithLeftHandXbox(OI.getXboxController());
     }
 
     // Make this return true when this Command no longer needs to run execute()
