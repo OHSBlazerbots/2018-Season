@@ -6,9 +6,10 @@ import org.usfirst.frc.team3807.robot.commands.HaltRobot;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class DriveForward extends Autonomous {
-	public DriveForward(){
-		addSequential(new Drive(.6, 0.175	));
-		addSequential(new WaitCommand(6.0));
-		addSequential(new HaltRobot());
+	public DriveForward(double time){
+		addSequential(new Drive(-.6, 0.175	));//drives forward
+		System.out.println("Time Length: " + time);
+		addSequential(new WaitCommand(time));//waits 
+		addSequential(new HaltRobot());//halts robot 
 	}
 }
