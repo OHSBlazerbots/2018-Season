@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class DriveForward extends Autonomous {
 	public DriveForward(double time){
-		addSequential(new Drive(-.6, 0.175	));//drives forward
+		addSequential(new Drive(0.6, 0.175	));//drives forward
 		System.out.println("Time Length: " + time);
 		addSequential(new WaitCommand(time));//waits 
 		addSequential(new HaltRobot());//halts robot 

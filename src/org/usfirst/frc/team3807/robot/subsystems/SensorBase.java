@@ -27,8 +27,7 @@ public class SensorBase extends Subsystem {
 	double potValue;
 
 	// Power Distribution Panel Sensors
-	// PowerDistributionPanel pdp;
-	double totalPDPCurrent;
+	PowerDistributionPanel pdp;
 
 	// Hall Effect Sensors
 	 DigitalInput maxHallInput;
@@ -39,6 +38,8 @@ public class SensorBase extends Subsystem {
 
 	public SensorBase() {
 		prefs = Preferences.getInstance();
+		
+		pdp = new PowerDistributionPanel();
 
 		// int port = (int) SmartDashboard.getNumber("PROT", 6);
 		int port = 0;
