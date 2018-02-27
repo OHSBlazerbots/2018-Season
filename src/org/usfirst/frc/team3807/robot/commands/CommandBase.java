@@ -18,7 +18,7 @@ public abstract class CommandBase extends Command{
 	public static void init(){
 		chassis = new Chassis (RobotMap.CHASSIS_LEFT, RobotMap.CHASSIS_RIGHT);
 		wheelIntake = new WheelIntake(RobotMap.INTAKE_WHEEL_ONE, RobotMap.INTAKE_WHEEL_TWO);
-		scissorLift = new ScissorLift(RobotMap.SCISSOR_LIFT_MOTOR_A, RobotMap.SCISSOR_LIFT_MOTOR_B, RobotMap.SCISSOR_LIFT_MOTOR_C, RobotMap.SCISSOR_LIFT_MOTOR_D);
+		//scissorLift = new ScissorLift(RobotMap.SCISSOR_LIFT_MOTOR_A, RobotMap.SCISSOR_LIFT_MOTOR_B, RobotMap.SCISSOR_LIFT_MOTOR_C, RobotMap.SCISSOR_LIFT_MOTOR_D);
 		
 		
 		oi = new OI(); //Always instantiate OI last.

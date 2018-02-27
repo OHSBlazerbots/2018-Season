@@ -28,29 +28,29 @@ public class ScissorLift extends Subsystem {
 	}
 
 	public void extendScissorLift(double speedWheelIntake) {
-		ScissorLiftMotor1a.set(speedWheelIntake);
-		ScissorLiftMotor1b.set(speedWheelIntake);
-		ScissorLiftMotor2a.set(-speedWheelIntake);
-		ScissorLiftMotor2b.set(-speedWheelIntake);
+//		ScissorLiftMotor1a.set(speedWheelIntake);
+//		ScissorLiftMotor1b.set(speedWheelIntake);
+//		ScissorLiftMotor2a.set(-speedWheelIntake);
+//		ScissorLiftMotor2b.set(-speedWheelIntake);
 		
 		RobotValues.extending = true;
 		RobotValues.retracting = false;
 	}
 
 	public void reduceScissorLift(double speedWheelIntake) {
-		ScissorLiftMotor1a.set(-speedWheelIntake);
-		ScissorLiftMotor1b.set(-speedWheelIntake);
-		ScissorLiftMotor2a.set(speedWheelIntake);
-		ScissorLiftMotor2b.set(speedWheelIntake);
+//		ScissorLiftMotor1a.set(-speedWheelIntake);
+//		ScissorLiftMotor1b.set(-speedWheelIntake);
+//		ScissorLiftMotor2a.set(speedWheelIntake);
+//		ScissorLiftMotor2b.set(speedWheelIntake);
 		RobotValues.extending = false;
 		RobotValues.retracting = true;
 	}
 
 	public void stopScissorLift() {
-		ScissorLiftMotor1a.stopMotor();
-		ScissorLiftMotor1b.stopMotor();
-		ScissorLiftMotor2a.stopMotor();
-		ScissorLiftMotor2b.stopMotor();
+//		ScissorLiftMotor1a.stopMotor();
+//		ScissorLiftMotor1b.stopMotor();
+//		ScissorLiftMotor2a.stopMotor();
+//		ScissorLiftMotor2b.stopMotor();
 		
 		RobotValues.extending = false;
 		RobotValues.retracting = false;
