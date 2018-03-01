@@ -173,6 +173,8 @@ public class Robot extends IterativeRobot {
 		if (sensorbase.fullyRetracted() && RobotValues.retracting) {
 			new StopScissorlift().initialize();
 		}
+		CommandBase.chassis.updateEncoder();
+		
 
 		Scheduler.getInstance().run();
 	}

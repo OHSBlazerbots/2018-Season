@@ -50,6 +50,8 @@ public class Chassis extends Subsystem {
 			drive = new DifferentialDrive(leftMotor, rightMotor); // Call this method inside the if statement to
 																	// double-check that Talon ports were assigned.
 			drive.setSafetyEnabled(false);
+			leftMotor.getSensorCollection().setQuadraturePosition(0, 0);
+			rightMotor.getSensorCollection().setQuadraturePosition(0, 0);
 		}
 	}
 
@@ -120,6 +122,7 @@ public class Chassis extends Subsystem {
 			setDefaultCommand(new DriveWithJoystick());
 			System.out.println("JOYSTICK");
 			break;
+
 		}
 	}
 	
@@ -128,6 +131,18 @@ public class Chassis extends Subsystem {
 		// Stop the chassis from moving
 		leftMotor.set(0);
 		rightMotor.set(0);
+	}
+	public void updateEncoder() {
+		double leftQuadPos = leftMotor.getSensorCollection().getQuadraturePosition();
+		double rightQuadPos = rightMotor.getSensorCollection().getQuadraturePosition();
+		SmartDashboard.putNumber("Left quadposition", leftQuadPos);
+		SmartDashboard.putNumber("left quadvelocity", leftMotor.getSensorCollection().getQuadratureVelocity());
+		double leftPos = leftQuadPos * 18.85/ (12 * 1450);
+		double rightPos = rightQuadPos * 18.85/ (12 * 1450);
+		SmartDashboard.putNumber("left actual pos", leftPos);
+		SmartDashboard.putNumber("right actual pos", rightPos);
+		SmartDashboard.putNumber("Right quadposition", rightQuadPos);
+		SmartDashboard.putNumber("Right quadvelocity", rightMotor.getSensorCollection().getQuadratureVelocity());
 	}
 
 }
