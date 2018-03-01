@@ -166,13 +166,13 @@ public class Robot extends IterativeRobot {
 		// WPI_TalonSRX potent= RobotMap.STRING_POT;
 		// SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
 		sensorbase.sendHallEffectValues();
-//		if (sensorbase.fullyExtended() && RobotValues.extending) {
-//			new StopScissorlift().initialize();
-//		}
-//
-//		if (sensorbase.fullyRetracted() && RobotValues.retracting) {
-//			new StopScissorlift().initialize();
-//		}
+		if (sensorbase.fullyExtended() && RobotValues.extending) {
+			new StopScissorlift().initialize();
+		}
+
+		if (sensorbase.fullyRetracted() && RobotValues.retracting) {
+			new StopScissorlift().initialize();
+		}
 		CommandBase.chassis.updateEncoder();
 		
 

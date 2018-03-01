@@ -27,18 +27,18 @@ public class SensorBase extends Subsystem {
 	double potValue;
 
 	// Power Distribution Panel Sensors
-	//PowerDistributionPanel pdp;
+	PowerDistributionPanel pdp;
 
 	// Hall Effect Sensors
-	 DigitalInput maxHallInput;
-	 DigitalInput minHallInput;
+	DigitalInput maxHallInput;
+	DigitalInput minHallInput;
 
 	// Robot Preferences
 	Preferences prefs;
 
 	public SensorBase() {
 		prefs = Preferences.getInstance();
-		
+
 		//pdp = new PowerDistributionPanel();
 
 		// int port = (int) SmartDashboard.getNumber("PROT", 6);
@@ -46,10 +46,10 @@ public class SensorBase extends Subsystem {
 		internalAccelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 		potAnalogIn = new AnalogInput(port);
 		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
-		// pdp = new PowerDistributionPanel();
+		pdp = new PowerDistributionPanel(10); 
 
-		 maxHallInput = new DigitalInput(RobotMap.maxHallPort);
-		 minHallInput = new DigitalInput(RobotMap.minHallPort);
+		maxHallInput = new DigitalInput(RobotMap.maxHallPort);
+		minHallInput = new DigitalInput(RobotMap.minHallPort);
 	}
 
 	@Override
@@ -83,24 +83,27 @@ public class SensorBase extends Subsystem {
 
 		return false; // Return false to keep the code running.
 	}
-	
+
 	public boolean fullyExtended() {
 		return !maxHallInput.get();
 	}
+
 	public boolean fullyRetracted() {
 		return !minHallInput.get();
 	}
-	
+
 	public boolean extending() {
 		return false;
 	}
+
 	public boolean retracting() {
 		return false;
 	}
-	
+
 	public void sendHallEffectValues() {
 		SmartDashboard.putBoolean("HallLeft", !maxHallInput.get());
 		SmartDashboard.putBoolean("HallRight", !minHallInput.get());
+		
 	}
 
 	public void robotPrefTest() throws NullPointerException {
@@ -109,7 +112,7 @@ public class SensorBase extends Subsystem {
 		int port = prefs.getInt("PROT", 1);
 		SmartDashboard.putNumber("PORT", port);
 	}
-	
+
 	public double getDriveForwardTime() {
 		System.out.println("DriveForwardTime Ran");
 		return prefs.getDouble("DriveForwardTime", 3);
