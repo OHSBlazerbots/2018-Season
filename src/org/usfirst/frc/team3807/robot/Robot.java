@@ -5,6 +5,7 @@ import org.usfirst.frc.team3807.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team3807.robot.commands.DriveWithLeftHandXbox;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DoNothingAuto;
 import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForward;
+import org.usfirst.frc.team3807.robot.commands.autonomous.DriveForwardAndTurnRight;
 //import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
 import org.usfirst.frc.team3807.robot.controllers.TalonSpeedController;
 import org.usfirst.frc.team3807.robot.controllers.vision.GripPipeline;
@@ -72,6 +73,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser();
 		autoChooser.addObject("DriveForward", new DriveForward(sensorbase.getDriveForwardTime()));
 		autoChooser.addDefault("DoNothingAuto", new DoNothingAuto());
+		autoChooser.addObject("DriveForwardAndTurnRight", new DriveForwardAndTurnRight(sensorbase.getDriveForwardTime()));
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
 		driverControllerChooser = new SendableChooser();

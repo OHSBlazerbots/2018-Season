@@ -115,7 +115,12 @@ public class SensorBase extends Subsystem {
 
 	public double getDriveForwardTime() {
 		System.out.println("DriveForwardTime Ran");
-		return prefs.getDouble("DriveForwardTime", 3);
+		return prefs.getDouble("DriveForwardTime", 6);
+	}
+	public double getDriveSpeed() {
+		System.out.println("Drive Forward Speed");
+		return prefs.getDouble("DriveForwardSpeed", 4);
+		
 	}
 
 }
