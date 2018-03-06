@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3807.robot.subsystems;
 
 import org.usfirst.frc.team3807.robot.RobotMap;
+
 import org.usfirst.frc.team3807.robot.RobotValues;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -9,8 +10,12 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SensorBase extends Subsystem {
@@ -20,6 +25,9 @@ public class SensorBase extends Subsystem {
 	double xAcceleration;
 	double yAcceleration;
 	double zAcceleration;
+	
+	//this portion of code is to see if the external gyroscope and accelerometer 
+	Gyro gyro;
 
 	// String Potentiometer
 	AnalogInput potAnalogIn;
@@ -50,6 +58,8 @@ public class SensorBase extends Subsystem {
 
 		maxHallInput = new DigitalInput(RobotMap.maxHallPort);
 		minHallInput = new DigitalInput(RobotMap.minHallPort);
+		
+		gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 	}
 
 	@Override
@@ -65,6 +75,12 @@ public class SensorBase extends Subsystem {
 		SmartDashboard.putString("InternalAccelerometerX", String.format("%.1f", xAcceleration * 1000));
 		SmartDashboard.putString("InternalAccelerometerY", String.format("%.2f", yAcceleration * 1000));
 		SmartDashboard.putString("InternalAccelerometerZ", String.format("%.4f", zAcceleration * 1000));
+	}
+	
+	public void sendGyroValues()
+	{
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
 	}
 
 	// commented out for testing in robot class
@@ -115,7 +131,7 @@ public class SensorBase extends Subsystem {
 
 	public double getDriveForwardTime() {
 		System.out.println("DriveForwardTime Ran");
-		return prefs.getDouble("DriveForwardTime", 6);
+		return prefs.getDouble("DriveForwardTime", 3);
 	}
 	public double getDriveSpeed() {
 		System.out.println("Drive Forward Speed");

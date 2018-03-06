@@ -167,6 +167,7 @@ public class Robot extends IterativeRobot {
 		// sensorbase.robotPrefTest();
 		// WPI_TalonSRX potent= RobotMap.STRING_POT;
 		// SmartDashboard.putString("StringPotentiometerPosition", ""+ potent.get());
+		sensorbase.sendGyroValues();
 		sensorbase.sendHallEffectValues();
 		if (sensorbase.fullyExtended() && RobotValues.extending) {
 			new StopScissorlift().initialize();
