@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3807.robot;
 
 import org.usfirst.frc.team3807.robot.commands.intake.*;
+
 import org.usfirst.frc.team3807.robot.subsystems.scissorlift.*;
 
 import edu.wpi.first.wpilibj.Joystick;

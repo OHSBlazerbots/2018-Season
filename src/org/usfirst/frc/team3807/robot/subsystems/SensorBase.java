@@ -28,7 +28,7 @@ public class SensorBase extends Subsystem {
 	
 	//this portion of code is to see if the external gyroscope and accelerometer 
 	Gyro gyro;
-
+	
 	// String Potentiometer
 	AnalogInput potAnalogIn;
 	AnalogPotentiometer stringPotentiometer;
@@ -53,13 +53,14 @@ public class SensorBase extends Subsystem {
 		int port = 0;
 		internalAccelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 		potAnalogIn = new AnalogInput(port);
-		stringPotentiometer = new AnalogPotentiometer(potAnalogIn);
+		//stringPotentiometer = new AnalogPotentiometer(potAnaloagIn);
 		pdp = new PowerDistributionPanel(10); 
 
 		maxHallInput = new DigitalInput(RobotMap.maxHallPort);
 		minHallInput = new DigitalInput(RobotMap.minHallPort);
 		
 		gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		//gyro.calibrate();
 	}
 
 	@Override
@@ -79,6 +80,7 @@ public class SensorBase extends Subsystem {
 	
 	public void sendGyroValues()
 	{
+		
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
 	}

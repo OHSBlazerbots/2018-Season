@@ -82,7 +82,7 @@ public class Chassis extends Subsystem {
 		SmartDashboard.putNumber("move", move);
 
 		// Move the robot
-		drive(-move, -turn);
+		drive(move, turn);
 	}
 	
 	public void driveWithRightHandXbox(XboxController controller) {
