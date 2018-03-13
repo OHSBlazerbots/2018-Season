@@ -9,8 +9,8 @@ public class RobotMap {
 	public static final int CHASSIS_LEFT = 4;
 	
 	//ID's for the WheelIntake motor controllers
-	public static final int INTAKE_WHEEL_ONE = 1;
-	public static final int INTAKE_WHEEL_TWO = 5;
+	public static final int INTAKE_WHEEL_ONE = 7;
+	public static final int INTAKE_WHEEL_TWO = 6;
 	
 	//ID's for the scissor lift
 	public static final int SCISSOR_LIFT_MOTOR_A = -1;
